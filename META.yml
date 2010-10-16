@@ -1,0 +1,28 @@
+---
+abstract: ~
+author:
+  - 'Yasuhiro Matsumoto <mattn.jp@gmail.com>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 1.00'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Growl-Any
+no_index:
+  directory:
+    - examples
+    - inc
+    - t
+    - xt
+requires:
+  Filter::Util::Call: 0
+  Net::Growl: 0
+  String::ShellQuote: 0
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01
