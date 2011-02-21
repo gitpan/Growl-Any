@@ -1,9 +1,10 @@
 ---
-abstract: 'Common interface to Growl.'
+abstract: 'Common interface to Growl'
 author:
   - 'Yasuhiro Matsumoto <mattn.jp@gmail.com>'
 build_requires:
   ExtUtils::MakeMaker: 6.42
+  Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.42
 distribution_type: module
@@ -20,11 +21,8 @@ no_index:
     - t
     - xt
 requires:
-  File::Which: 0
-  Filter::Util::Call: 0
   LWP::UserAgent: 0
-  Net::Growl: 0
-  String::ShellQuote: 0
+  perl: 5.8.1
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.04
+version: 0.05
