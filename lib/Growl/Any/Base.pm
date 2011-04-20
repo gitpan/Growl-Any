@@ -2,9 +2,8 @@ package Growl::Any::Base;
 use strict;
 use warnings;
 
-use Carp       ();
-use Encode     ();
-use File::Temp ();
+use Carp   ();
+use Encode ();
 
 sub encoding { 'UTF-8' } # overridable if needed
 
@@ -37,6 +36,12 @@ sub register {
     $self->{appname} = $self->encode($appname);
 }
 
+# parameters
+#  event
+#  title
+#  message
+#  icon (optional)
+#  link (optional)
 sub notify; # abstract method
 
 sub encode {
@@ -46,15 +51,32 @@ sub encode {
         : $text_str;
 }
 
+sub encode_from {
+    my($self, $from, $text_str) = @_;
+    if (defined($text_str)) {
+        Encode::from_to($text_str, $from, $self->{encoding}->name);
+    }
+    $text_str;
+}
+
 sub encode_list {
     my $self = shift;
     return map { defined($_) ? $self->{encoding}->encode($_) : $_ } @_;
 }
 
+sub encode_list_from {
+    my ($self, $from) = @_;
+    return map {
+        Encode::from_to($_, $from, $self->{encoding}->name) if defined($_);
+        $_
+    } @_;
+}
+
 sub _tmpfile { # returns a filehandle with filename() method
-    my($self) = @_;
+    my($self, $suffix) = @_;
     require File::Temp;
-    return File::Temp->new();
+    my (undef, $filename) = File::Temp::tempfile( SUFFIX => $suffix, CLEANUP => 1, OPEN => 0 );
+    return $filename;
 }
 
 sub _ua {
@@ -65,6 +87,7 @@ sub _ua {
         my $ua = LWP::UserAgent->new( agent =>
             sprintf 'Growl::Any (LWP/%s)', LWP->VERSION );
         $ua->env_proxy();
+        $ua->timeout(10);
         return $ua;
     };
 }
@@ -72,9 +95,12 @@ sub _ua {
 sub icon_file {
     my($self, $icon) = @_;
     unless(-e $icon) { # seems URI
-        my $tmpfile = $self->_tmpfile();
-        $self->_ua->mirror( $icon, $tmpfile );
-        return  $tmpfile;
+        my $ext = $icon;
+        $ext =~ s/#.*$//;
+        $ext = $ext =~ /.*(\.[a-zA-Z0-9]+)$/ ? $1 : '';
+        my $tmpfile = $self->_tmpfile( $ext );
+        my $res = $self->_ua->mirror( $icon, $tmpfile );
+        return $tmpfile if $res->is_success;
     }
     return $icon;
 }

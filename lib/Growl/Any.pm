@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use constant _DEBUG => $ENV{GROWL_ANY_DEBUG} ? 1 : 0;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 my $backend;
 
@@ -65,7 +65,7 @@ Growl::Any - Common interface to Growl
 =head1 SYNOPSIS
 
   use Growl::Any;
-  my $growl = Growl::Any->new("my app", ["event1", "event2"]);
+  my $growl = Growl::Any->new(appname => "my app", events => ["event1", "event2"]);
   $growl->notify("event1", "title", "message", "path/to/icon");
 
 =head1 DESCRIPTION
