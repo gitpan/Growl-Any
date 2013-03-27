@@ -3,28 +3,25 @@ abstract: 'Common interface to Growl'
 author:
   - 'Yasuhiro Matsumoto <mattn.jp@gmail.com>'
 build_requires:
-  ExtUtils::MakeMaker: 6.42
+  ExtUtils::MakeMaker: 6.59
   IO::Handle: 0
   Test::More: 0
   parent: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.42
-distribution_type: module
-generated_by: 'Module::Install version 1.00'
+  Module::Build::Tiny: 0
+dynamic_config: 0
+generated_by: 'Minilla/v0.0.49, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Growl-Any
-no_index:
-  directory:
-    - examples
-    - inc
-    - t
-    - xt
+provides: {}
 requires:
   LWP::UserAgent: 0
-  perl: 5.8.1
+  perl: 5.008001
 resources:
-  license: http://dev.perl.org/licenses/
-version: 0.09
+  bugtracker: https://github.com/mattn/p5-Growl-Any/issues
+  homepage: https://github.com/mattn/p5-Growl-Any
+  repository: git://github.com/mattn/p5-Growl-Any.git
+version: 0.10
